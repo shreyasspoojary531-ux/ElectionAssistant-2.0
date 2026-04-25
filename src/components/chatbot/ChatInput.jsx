@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { SendHorizonal } from 'lucide-react'
 
 export default function ChatInput({
@@ -6,12 +7,12 @@ export default function ChatInput({
   onSend,
   value,
 }) {
-  function handleKeyDown(event) {
+  const handleKeyDown = useCallback((event) => {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault()
       onSend()
     }
-  }
+  }, [onSend])
 
   return (
     <div
@@ -34,6 +35,7 @@ export default function ChatInput({
         onChange={(event) => onChange(event.target.value)}
         onKeyDown={handleKeyDown}
         maxLength={400}
+        aria-label="Message to chatbot"
         placeholder="Ask about registration, EVMs, or voting day..."
         style={{
           flex: 1,

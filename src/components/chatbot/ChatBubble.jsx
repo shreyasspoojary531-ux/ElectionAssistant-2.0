@@ -1,8 +1,9 @@
+import { memo } from 'react'
 import { Bot, UserRound } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { sanitizePlainText } from '../../utils/sanitize.js'
 
-export default function ChatBubble({ message }) {
+const ChatBubble = memo(function ChatBubble({ message }) {
   const isUser = message.role === 'user'
   const cleanContent = sanitizePlainText(message.content, 900)
 
@@ -61,4 +62,6 @@ export default function ChatBubble({ message }) {
       )}
     </motion.div>
   )
-}
+})
+
+export default ChatBubble

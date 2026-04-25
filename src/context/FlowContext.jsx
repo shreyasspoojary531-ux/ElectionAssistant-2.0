@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useMemo, useCallback } from 'react'
 import { sanitizePlainText } from '../utils/sanitize.js'
 
 const FlowContext = createContext(null)
@@ -10,28 +10,43 @@ export function FlowProvider({ children }) {
   const [hasVoterId, setHasVoterId] = useState(null)
   const [currentJourneyStep, setCurrentJourneyStep] = useState(0)
 
-  const value = {
+  const setName = useCallback((nextName) => {
+    setUserName(sanitizePlainText(nextName, 48))
+  }, [])
+
+  const setVoterId = useCallback((nextValue) => {
+    setHasVoterId(nextValue)
+  }, [])
+
+  const restartFlow = useCallback(() => {
+    setIntent(null)
+    setVoterStatus(null)
+    setHasVoterId(null)
+    setCurrentJourneyStep(0)
+  }, [])
+
+  const value = useMemo(() => ({
     userName,
     intent,
     voterStatus,
     hasVoterId,
     currentJourneyStep,
-    setName(nextName) {
-      setUserName(sanitizePlainText(nextName, 48))
-    },
+    setName,
     setIntent,
     setVoterStatus,
-    setVoterId(nextValue) {
-      setHasVoterId(nextValue)
-    },
+    setVoterId,
     setCurrentJourneyStep,
-    restartFlow() {
-      setIntent(null)
-      setVoterStatus(null)
-      setHasVoterId(null)
-      setCurrentJourneyStep(0)
-    },
-  }
+    restartFlow,
+  }), [
+    userName,
+    intent,
+    voterStatus,
+    hasVoterId,
+    currentJourneyStep,
+    setName,
+    setVoterId,
+    restartFlow
+  ])
 
   return <FlowContext.Provider value={value}>{children}</FlowContext.Provider>
 }

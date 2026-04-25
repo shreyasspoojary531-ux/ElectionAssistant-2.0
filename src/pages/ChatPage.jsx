@@ -152,6 +152,7 @@ export default function ChatPage() {
           <div
             ref={listRef}
             className="hidden-scrollbar"
+            aria-live="polite"
             style={{
               flex: 1,
               overflowY: 'auto',

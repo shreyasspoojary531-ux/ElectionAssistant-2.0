@@ -43,7 +43,7 @@ export default function FullscreenLayout({
       {/* Main layout */}
       <div className="relative z-10 flex min-h-screen flex-col px-5 py-3 sm:px-8">
         {/* Top navigation */}
-        <motion.div
+        <motion.nav
           className="flex items-center justify-between"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -92,12 +92,12 @@ export default function FullscreenLayout({
             Indian Election Guide
           </Link>
           <ThemeToggle />
-        </motion.div>
+        </motion.nav>
 
         {/* Page content */}
-        <div className={`flex flex-1 items-center justify-center ${contentClassName}`}>
+        <main className={`flex flex-1 items-center justify-center ${contentClassName}`}>
           {children}
-        </div>
+        </main>
       </div>
     </PageTransition>
   )
